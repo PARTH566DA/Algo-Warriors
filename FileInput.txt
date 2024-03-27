@@ -1,0 +1,28 @@
+﻿string semester;
+cout << "Enter semester (winter/autumn): ";
+cin >> semester;
+string filename = (semester == "winter") ? "winter.txt" : "autmn.txt";
+ifstream input(filename);
+
+
+if (!input) 
+{
+    cout << "Error: Unable to open file " << filename << endl;
+    return 1;
+}
+
+
+string perticularline;
+while (getline(input, perticularline))
+{
+istringstream iss(perticularline);
+string sem, sub, pro_n, cre, br;
+if (getline(iss, sem, ',') && getline(iss, sub, ',') && getline(iss, pro_n, ',') && getline(iss, cre, ',') && getline(iss, br, ' ')) 
+{
+    semesterinput.push_back(sem);
+    subjectinput.push_back(sub);
+    professor_nameinput.push_back(pro_n);
+    creditinput.push_back(cre);
+    branchinput.push_back(br);
+}
+}
