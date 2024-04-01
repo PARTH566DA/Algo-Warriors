@@ -11,10 +11,11 @@ vector<string> creditinput;
 vector<string> branchinput;
 const int Total_Rooms = 23; 
 const int Total_slots = 5;
-vector<vector<vector<string>>> Course_Allocation(Total_Rooms, vector<vector<string>>(Total_slots, vector<string>(5, "0")));
+vector<vector<vector<string> > > Course_Allocation(Total_Rooms, vector<vector<string> >(Total_slots, vector<string>(5, "0")));
 bool Is_Prof_Avail(int timing, int day, string Prof, int room);
 void Generate_Timetable();
-void PrintTimeTable();
+void WriteTimetableToFile(const string& filename);
+void Professor_TimeTable(const string& professorName);
 
 int main() {
     string semester;
@@ -43,8 +44,24 @@ int main() {
     }
 
     Generate_Timetable();
-    PrintTimeTable();
 
+    WriteTimetableToFile("timetable.csv");
+    cout << endl << "Time Table has been Saved" << endl << endl << endl;
+
+    cout << "Do you want time table with respect to Professor? (YES/NO)" << endl;
+    string yesno;
+    cin >> yesno;
+    cout << endl;
+    
+    if(yesno=="YES"){
+        string proff_name;
+        cout << "Enter the Professor code for whome you need Timetable." << endl;
+        cin >> proff_name;
+        Professor_TimeTable(proff_name);
+        cout << endl;
+        cout << "Time table for " << proff_name << " has been saved successfully" << endl;
+    }
+    
     return 0;
 }
 
@@ -99,34 +116,139 @@ void Generate_Timetable() {
     }
 }
 
- void PrintTimeTable() {
-    for(int k = 0; k < 5; ++k) {
-        if(k==0)
-            cout << "Monday TimeTable:" << endl;
-        if(k==1)
-            cout << "Tuesday TimeTable:" << endl;
-        if(k==2)
-            cout << "Wednesday TimeTable:" << endl;
-        if(k==3)
-            cout << "Thursday TimeTable:" << endl;
-        if(k==4)
-            cout << "Friday TimeTable:" << endl;
+void Professor_TimeTable(const string& professorName) {
+    string filename = professorName + "_timetable.csv";
+    ofstream outfile(filename);
+    if (!outfile) {
+        cerr << "Error: Unable to open file " << filename << endl;
+        return;
+    }
 
-        for(int j = 0; j < 5; ++j) {
-            if(j==0)
-                cout << "Time: 8:00 AM - 9:00 AM" << endl;
-            if(j==1)
-                cout << "Time: 9:00 AM - 10:00 AM" << endl;
-            if(j==2)
-                cout << "Time: 10:00 AM - 11:00 AM" << endl;
-            if(j==3)
-                cout << "Time: 11:00 AM - 12:00 PM" << endl;
-            if(j==4)
-                cout << "Time: 12:00 PM - 1:00 PM" << endl;
+    // Write headers
+    outfile << "Course,Semester,Branch,Room,Day,Time" << endl;
+    for(int f = 0; f < professor_nameinput.size(); f++) {
+        if(professor_nameinput[f] == professorName) {
+            for (int i = 0; i < Total_Rooms; i++) {
+                for (int j = 0; j < Total_slots; j++) {
+                    for (int k = 0; k < 5; k++) {
+                        if(subjectinput[f] == Course_Allocation[i][j][k]) {
+                            outfile << subjectinput[f] << ",";
+                            outfile << semesterinput[f] << ",";
+                            outfile << branchinput[f] << ",";
+                            outfile << ",";
+                            outfile << ",";
 
-            for(int i = 0; i < 23; ++i) {
-                if (Course_Allocation[i][j][k] != "0") { 
-                    cout << "Course: " << Course_Allocation[i][j][k] << "  ";
+                            if (i == 0) outfile << "LT1" << ",";
+                            else if (i == 1) outfile << "LT2" << ",";
+                            else if (i == 2) outfile << "LT3" << ",";
+                            else if (i == 3) outfile << "CEP-003" << ",";
+                            else if (i == 4) outfile << "CEP-102" << ",";
+                            else if (i == 5) outfile << "CEP-103" << ",";
+                            else if (i == 6) outfile << "CEP-104" << ",";
+                            else if (i == 7) outfile << "CEP-105" << ",";
+                            else if (i == 8) outfile << "CEP-106" << ",";
+                            else if (i == 9) outfile << "CEP-107" << ",";
+                            else if (i == 10) outfile << "CEP-108" << ",";
+                            else if (i == 11) outfile << "CEP-109" << ",";
+                            else if (i == 12) outfile << "CEP-110" << ",";
+                            else if (i == 13) outfile << "CEP-202" << ",";
+                            else if (i == 14) outfile << "CEP-203" << ",";
+                            else if (i == 15) outfile << "CEP-204" << ",";
+                            else if (i == 16) outfile << "CEP-205" << ",";
+                            else if (i == 17) outfile << "CEP-206" << ",";
+                            else if (i == 18) outfile << "CEP-207" << ",";
+                            else if (i == 19) outfile << "CEP-209" << ",";
+                            else if (i == 20) outfile << "CEP-210" << ",";
+                            else if (i == 21) outfile << "CEP-211" << ",";
+                            else if (i == 22) outfile << "CEP-212" << ",";
+
+                            if(k==0) outfile << "Monday" << ",";
+                            else if(k==1) outfile << "Tuesday" << ",";
+                            else if(k==2) outfile << "Wednesday" << ",";
+                            else if(k==3) outfile << "Thursday" << ",";
+                            else if(k==4) outfile << "Friday" << ",";
+
+                            if(j==0) outfile << "8:00 AM - 9:00 AM" << ",";
+                            else if(j==1) outfile << "9:00 AM - 10:00 AM" << ",";
+                            else if(j==2) outfile << "10:00 AM - 11:00 AM" << ",";
+                            else if(j==3) outfile << "11:00 AM - 12:00 PM" << ",";
+                            else if(j==4) outfile << "12:00 PM - 1:00 PM" << ",";
+
+                            outfile << endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    outfile.close();
+}
+
+void WriteTimetableToFile(const string& filename) {
+    ofstream outfile(filename);
+    if (!outfile) {
+        cerr << "Error: Unable to open file " << filename << endl;
+        return;
+    }
+
+    // Write headers
+    outfile << "Day,Time,Room,Course,Professor,Semester,Branch" << endl;
+
+    for (int k = 0; k < 5; ++k) {
+        string day;
+        if (k == 0)
+            day = "Monday";
+        else if (k == 1)
+            day = "Tuesday";
+        else if (k == 2)
+            day = "Wednesday";
+        else if (k == 3)
+            day = "Thursday";
+        else if (k == 4)
+            day = "Friday";
+
+        for (int j = 0; j < 5; ++j) {
+            string time;
+            if (j == 0)
+                time = "8:00 AM - 9:00 AM";
+            else if (j == 1)
+                time = "9:00 AM - 10:00 AM";
+            else if (j == 2)
+                time = "10:00 AM - 11:00 AM";
+            else if (j == 3)
+                time = "11:00 AM - 12:00 PM";
+            else if (j == 4)
+                time = "12:00 PM - 1:00 PM";
+
+            for (int i = 0; i < 23; ++i) {
+                if (Course_Allocation[i][j][k] != "0") {
+                    outfile << day << "," << time << ",";
+                    if (i == 0) outfile << "LT1";
+                    if (i == 1) outfile << "LT2";
+                    if (i == 2) outfile << "LT3";
+                    if (i == 3) outfile << "CEP-003";
+                    if (i == 4) outfile << "CEP-102";
+                    if (i == 5) outfile << "CEP-103";
+                    if (i == 6) outfile << "CEP-104";
+                    if (i == 7) outfile << "CEP-105";
+                    if (i == 8) outfile << "CEP-106";
+                    if (i == 9) outfile << "CEP-107";
+                    if (i == 10) outfile << "CEP-108";
+                    if (i == 11) outfile << "CEP-109";
+                    if (i == 12) outfile << "CEP-110";
+                    if (i == 13) outfile << "CEP-202";
+                    if (i == 14) outfile << "CEP-203";
+                    if (i == 15) outfile << "CEP-204";
+                    if (i == 16) outfile << "CEP-205";
+                    if (i == 17) outfile << "CEP-206";
+                    if (i == 18) outfile << "CEP-207";
+                    if (i == 19) outfile << "CEP-209";
+                    if (i == 20) outfile << "CEP-210";
+                    if (i == 21) outfile << "CEP-211";
+                    if (i == 22) outfile << "CEP-212";
+                    outfile << "," << Course_Allocation[i][j][k] << ",";
+
                     int courseIndex = -1;
                     for (int idx = 0; idx < subjectinput.size(); ++idx) {
                         if (Course_Allocation[i][j][k] == subjectinput[idx]) {
@@ -135,59 +257,15 @@ void Generate_Timetable() {
                         }
                     }
                     if (courseIndex != -1) {
-                        cout << "Professor: " << professor_nameinput[courseIndex] << "  ";
-                        cout << "Semester: " << semesterinput[courseIndex] << "  ";
-                        cout << "Branch: " << branchinput[courseIndex] << "  ";
-                        cout << "Room: ";
-                        if (i == 0) cout << "LT1";
-                         if (i == 1) cout << "LT2";
-                        if (i == 2) cout << "LT3";
-                        if(i==3)
-                    cout<<"CEP-003";
-                    if(i==4)
-                    cout<<"CEP-102";
-                    if(i==5)
-                    cout<<"CEP-103";
-                    if(i==6)
-                    cout<<"CEP-104";
-                    if(i==7)
-                    cout<<"CEP-105";
-                    if(i==8)
-                    cout<<"CEP-106";
-                    if(i==9)
-                    cout<<"CEP-107";
-                    if(i==10)
-                    cout<<"CEP-108";
-                    if(i==11)
-                    cout<<"CEP-109";
-                    if(i==12)
-                    cout<<"CEP-110";
-                    if(i==13)
-                    cout<<"CEP-202";
-                    if(i==14)
-                    cout<<"CEP-203";
-                    if(i==15)
-                    cout<<"CEP-204";
-                    if(i==16)
-                    cout<<"CEP-205";
-                    if(i==17)
-                    cout<<"CEP-206";
-                    if(i==18)
-                    cout<<"CEP-207";
-                    if(i==19)
-                    cout<<"CEP-209";
-                    if(i==20)
-                    cout<<"CEP-210";
-                    if(i==21)
-                    cout<<"CEP-211";
-                    if(i==22)
-                    cout<<"CEP-212";
+                        outfile << professor_nameinput[courseIndex] << ",";
+                        outfile << semesterinput[courseIndex] << ",";
+                        outfile << branchinput[courseIndex];
                     }
-                    cout << endl;
+                    outfile << endl;
                 }
             }
-            cout << endl;
         }
-        cout << endl << endl << endl;
-    }  
+    }
+
+    outfile.close();
 }
