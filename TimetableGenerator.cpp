@@ -50,18 +50,36 @@ int main() {
 
 bool Is_Prof_Avail(int timing, int day, string Prof, int room) {
     vector<string> code;
+    //code is the vector that contains all course of the Professor which is passed as argument
     for (int i = 0; i < professor_nameinput.size(); ++i) {
         if (Prof == professor_nameinput[i]) {
             code.push_back(subjectinput[i]);
         }
     }
-    for (int j = 0; j < code.size(); ++j) {
-        for (int i = 0; i < room; ++i) {
-            if (Course_Allocation[i][timing][day] == code[j]) {
-                return false;
+     //the loop below  checks if any course of given Professor is already alocated in this slot or not
+ if(timing>0)
+ {
+      for(int t=timing-1;t<=timing;++t)
+      {
+        for (int j = 0; j < code.size(); ++j) {
+            for (int i = 0; i <= room; ++i) {
+                if (Course_Allocation[i][t][day] == code[j]) {
+                    return false;
+                }
             }
         }
-    }
+      }
+ }
+ else
+ {
+     for (int j = 0; j < code.size(); ++j) {
+            for (int i = 0; i <= room; ++i) {
+                if (Course_Allocation[i][timing][day] == code[j]) {
+                    return false;
+                }
+            }
+        }
+ }
     return true;
 }
 
