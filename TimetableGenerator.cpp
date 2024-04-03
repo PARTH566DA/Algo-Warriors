@@ -24,7 +24,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room);
 void Generate_Timetable();
 void WriteTimetableToFile(const string& filename);
 void Professor_TimeTable(const string& professorName);
-
+void Semester_TimeTable();
 
 int main() {
     string semester;
@@ -70,7 +70,7 @@ int main() {
         cout << endl;
         cout << "Time table for " << proff_name << " has been saved successfully" << endl;
     }
-    
+    Semester_TimeTable();
     return 0;
 }
 
@@ -95,7 +95,7 @@ bool string_match(int branch_index,int k)
     }
 }
 
-bool Is_Prof_Avail(int timing, int day, string Prof, int room) { 
+bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) { 
     vector<string> code; 
     //code is the vector that contains all course of the Professor which is passed as argument 
     for (int i = 0; i < professor_nameinput.size(); ++i) { 
@@ -327,6 +327,88 @@ void WriteTimetableToFile(const string& filename) {
                         outfile << branchinput[courseIndex];
                     }
                     outfile << endl;
+                }
+            }
+        }
+    }
+
+    outfile.close();
+}
+void Semester_TimeTable() {
+
+    cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;
+    string yesno;
+    cin >> yesno;
+    string Semester;
+    if(yesno=="YES"){
+        cout << "Enter Semester Number.";
+        cin >> Semester;
+    }
+
+    string filename = Semester + "_timetable.csv";
+    ofstream outfile(filename);
+    if (!outfile) {
+        cerr << "Error: Unable to open file " << filename << endl;
+        return;
+    }
+
+    outfile << "Day,Time,Course,Professor,Branch,Room" << endl;
+
+    vector<string> days;
+    days.push_back("Monday");
+    days.push_back("Tuesday");
+    days.push_back("Wednesday");
+    days.push_back("Thursday");
+    days.push_back("Friday");
+
+    vector<string> times;
+    times.push_back("8:00 AM - 9:00 AM");
+    times.push_back("9:00 AM - 10:00 AM");
+    times.push_back("10:00 AM - 11:00 AM");
+    times.push_back("11:00 AM - 12:00 PM");
+    times.push_back("12:00 PM - 1:00 PM");
+
+    bool printedDays[5] = {false};
+    bool printedTimes[5] = {false};
+
+    for (int k = 0; k < 5; k++) {
+        string day = days[k];
+
+        if (!printedDays[k]) {
+            bool dayPrinted = false;
+            for (int j = 0; j < Total_slots; j++) {
+                string time = times[j];
+                bool timeprinted = false;
+                bool slotPrinted = false;
+                for (int i = 0; i < Total_Rooms; i++) { 
+                    for (int f = 0; f < professor_nameinput.size(); f++) { 
+                        if (semesterinput[f] == Semester && subjectinput[f] == Course_Allocation[i][j][k]) { 
+                            if (!dayPrinted) {
+                                outfile << day << ",";
+                                dayPrinted = true;
+                                printedDays[k] = true;
+                            } else {
+                                outfile << ",";
+                            }
+                            if (!timeprinted) {
+                                outfile << time << ",";
+                                timeprinted = true;
+                                printedTimes[k] = true;
+                            } else {
+                                outfile << ",";
+                            }
+
+                            outfile << subjectinput[f] << ",";
+                            outfile << professor_nameinput[f] << ",";
+                            outfile << branchinput[f] << ",";
+                            if (i == 0) outfile << "LT1" << ",";
+                            else if (i == 1) outfile << "LT2" << ",";
+                            else if (i == 2) outfile << "LT3" << ",";
+                            else if (i >= 3 && i <= 12) outfile << "CEP-" << (i + 1) << ",";
+                            else if (i >= 13 && i <= 22) outfile << "CEP-" << (i + 90) << ",";
+                            outfile << endl;
+                        }
+                    }
                 }
             }
         }
