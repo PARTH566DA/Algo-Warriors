@@ -48,5 +48,18 @@ else
               }
 
 }
+for(int i=0;i<room;++i)
+{
+    for(int k=0;k<subjectinput.size();++k)
+    {
+        if(Course_Allocation[i][timing][day]==subjectinput[k])
+        {
+            if(((branchinput[k]==branchinput[branch_index])||(string_match(branch_index,k)))&&(semesterinput[k]==semesterinput[branch_index]))
+            {
+                return false;
+            }
+        }
+    }
+}
     return true;
 }
