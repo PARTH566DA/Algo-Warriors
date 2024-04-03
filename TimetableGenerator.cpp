@@ -157,13 +157,25 @@ void Professor_TimeTable(const string& professorName) {
     }
 
     // Write headers
-    outfile << "Course,Semester,Branch,Room,Day,Time" << endl;
+    outfile << "Day,Time,Course,Semester,Branch,Room" << endl;
     for(int f = 0; f < professor_nameinput.size(); f++) {
         if(professor_nameinput[f] == professorName) {
             for (int i = 0; i < Total_Rooms; i++) {
                 for (int j = 0; j < Total_slots; j++) {
                     for (int k = 0; k < 5; k++) {
                         if(subjectinput[f] == Course_Allocation[i][j][k]) {
+                            if(k==0) outfile << "Monday" << ",";
+                            else if(k==1) outfile << "Tuesday" << ",";
+                            else if(k==2) outfile << "Wednesday" << ",";
+                            else if(k==3) outfile << "Thursday" << ",";
+                            else if(k==4) outfile << "Friday" << ",";
+
+                            if(j==0) outfile << "8:00 AM - 9:00 AM" << ",";
+                            else if(j==1) outfile << "9:00 AM - 10:00 AM" << ",";
+                            else if(j==2) outfile << "10:00 AM - 11:00 AM" << ",";
+                            else if(j==3) outfile << "11:00 AM - 12:00 PM" << ",";
+                            else if(j==4) outfile << "12:00 PM - 1:00 PM" << ",";
+
                             outfile << subjectinput[f] << ",";
                             outfile << semesterinput[f] << ",";
                             outfile << branchinput[f] << ",";
@@ -192,18 +204,7 @@ void Professor_TimeTable(const string& professorName) {
                             else if (i == 21) outfile << "CEP-211" << ",";
                             else if (i == 22) outfile << "CEP-212" << ",";
 
-                            if(k==0) outfile << "Monday" << ",";
-                            else if(k==1) outfile << "Tuesday" << ",";
-                            else if(k==2) outfile << "Wednesday" << ",";
-                            else if(k==3) outfile << "Thursday" << ",";
-                            else if(k==4) outfile << "Friday" << ",";
-
-                            if(j==0) outfile << "8:00 AM - 9:00 AM";
-                            else if(j==1) outfile << "9:00 AM - 10:00 AM";
-                            else if(j==2) outfile << "10:00 AM - 11:00 AM";
-                            else if(j==3) outfile << "11:00 AM - 12:00 PM";
-                            else if(j==4) outfile << "12:00 PM - 1:00 PM";
-
+                            
                             outfile << endl;
                         }
                     }
