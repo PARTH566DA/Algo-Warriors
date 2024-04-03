@@ -74,7 +74,26 @@ int main() {
     return 0;
 }
 
+bool string_match(int branch_index,int k)
+{
+    vector<string>branch_index2;
+    vector<string>curr_branch;
+    curr_branch.push_back(branchinput[k]);
+    branch_index2.push_back(branchinput[branch_index]);
+    bool found = (curr_branch[0].find(branch_index2[0]) != string::npos);
 
+    if (found) {
+        return true;
+    } else {
+        bool found = (branch_index2[0].find(curr_branch[0]) != string::npos);
+        if(found){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
 
 bool Is_Prof_Avail(int timing, int day, string Prof, int room) { 
     vector<string> code; 
@@ -127,6 +146,19 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room) {
                 } 
               } 
         } 
+    for(int i=0;i<room;++i)
+   {
+    for(int k=0;k<subjectinput.size();++k)
+    {
+        if(Course_Allocation[i][timing][day]==subjectinput[k])
+        {
+            if(((branchinput[k]==branchinput[branch_index])||(string_match(branch_index,k)))&&(semesterinput[k]==semesterinput[branch_index]))
+            {
+                return false;
+            }
+        }
+    }
+  }
     return true; 
 }
 
@@ -136,7 +168,7 @@ void Generate_Timetable() {
     for (int i = 0; i < Total_Rooms; i++) {
         for (int j = 0; j < Total_slots; j++) {
             for (int k = 0; k < 5; k++) {
-                if (course_index < subjectinput.size() && Is_Prof_Avail(j, k, professor_nameinput[course_index], i) && stoi(creditinput[course_index]) > 0) {
+                if (course_index < subjectinput.size() && Is_Prof_Avail(j, k, professor_nameinput[course_index], i,course_index) && stoi(creditinput[course_index]) > 0) {
                     Course_Allocation[i][j][k] = subjectinput[course_index];
                     creditinput[course_index] = to_string(stoi(creditinput[course_index]) - 1); 
                     if(stoi(creditinput[course_index])==0)
