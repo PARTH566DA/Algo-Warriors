@@ -1,0 +1,20 @@
+bool string_match(int branch_index,int k)
+{
+    vector<string>branch_index2;
+    vector<string>curr_branch;
+    curr_branch.push_back(branchinput[k]);
+    branch_index2.push_back(branchinput[branch_index]);
+    bool found = (curr_branch[0].find(branch_index2[0]) != string::npos);
+
+    if (found) {
+        return true;
+    } else {
+        bool found = (branch_index2[0].find(curr_branch[0]) != string::npos);
+        if(found){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
