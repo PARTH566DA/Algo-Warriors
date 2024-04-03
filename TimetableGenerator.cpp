@@ -28,10 +28,10 @@ void Semester_TimeTable();
 
 int main() {
     string semester;
-    cout << "Enter semester (winter/autmn): ";
+    cout << "Enter semester (winter/autumn): ";
     cin >> semester;
     
-    string filename = (semester == "winter") ? "winter.txt" : "autmn.txt";
+    string filename = (semester == "winter") ? "winter.txt" : "autumn.txt";
     ifstream input(filename);
     
     if (!input) {
@@ -260,73 +260,78 @@ void WriteTimetableToFile(const string& filename) {
     // Write headers
     outfile << "Day,Time,Room,Course,Professor,Semester,Branch" << endl;
 
+    vector<string> days;
+    days.push_back("Monday");
+    days.push_back("Tuesday");
+    days.push_back("Wednesday");
+    days.push_back("Thursday");
+    days.push_back("Friday");
+
+    vector<string> times;
+    times.push_back("8:00 AM - 9:00 AM");
+    times.push_back("9:00 AM - 10:00 AM");
+    times.push_back("10:00 AM - 11:00 AM");
+    times.push_back("11:00 AM - 12:00 PM");
+    times.push_back("12:00 PM - 1:00 PM");
+
+    bool printedDays[5] = {false};
+    bool printedTimes[5] = {false};
+
+
     for (int k = 0; k < 5; ++k) {
-        string day;
-        if (k == 0)
-            day = "Monday";
-        else if (k == 1)
-            day = "Tuesday";
-        else if (k == 2)
-            day = "Wednesday";
-        else if (k == 3)
-            day = "Thursday";
-        else if (k == 4)
-            day = "Friday";
+        string day = days[k];
 
-        for (int j = 0; j < 5; ++j) {
-            string time;
-            if (j == 0)
-                time = "8:00 AM - 9:00 AM";
-            else if (j == 1)
-                time = "9:00 AM - 10:00 AM";
-            else if (j == 2)
-                time = "10:00 AM - 11:00 AM";
-            else if (j == 3)
-                time = "11:00 AM - 12:00 PM";
-            else if (j == 4)
-                time = "12:00 PM - 1:00 PM";
+        // Check if the day has been printed already
+        if (!printedDays[k]) {
+            bool dayPrinted = false;
+            for (int j = 0; j < 5; ++j) {
+                string time=times[j];
+                bool timeprinted = false;
 
-            for (int i = 0; i < 23; ++i) {
-                if (Course_Allocation[i][j][k] != "0") {
-                    outfile << day << "," << time << ",";
-                    if (i == 0) outfile << "LT1";
-                    if (i == 1) outfile << "LT2";
-                    if (i == 2) outfile << "LT3";
-                    if (i == 3) outfile << "CEP-003";
-                    if (i == 4) outfile << "CEP-102";
-                    if (i == 5) outfile << "CEP-103";
-                    if (i == 6) outfile << "CEP-104";
-                    if (i == 7) outfile << "CEP-105";
-                    if (i == 8) outfile << "CEP-106";
-                    if (i == 9) outfile << "CEP-107";
-                    if (i == 10) outfile << "CEP-108";
-                    if (i == 11) outfile << "CEP-109";
-                    if (i == 12) outfile << "CEP-110";
-                    if (i == 13) outfile << "CEP-202";
-                    if (i == 14) outfile << "CEP-203";
-                    if (i == 15) outfile << "CEP-204";
-                    if (i == 16) outfile << "CEP-205";
-                    if (i == 17) outfile << "CEP-206";
-                    if (i == 18) outfile << "CEP-207";
-                    if (i == 19) outfile << "CEP-209";
-                    if (i == 20) outfile << "CEP-210";
-                    if (i == 21) outfile << "CEP-211";
-                    if (i == 22) outfile << "CEP-212";
-                    outfile << "," << Course_Allocation[i][j][k] << ",";
-
-                    int courseIndex = -1;
-                    for (int idx = 0; idx < subjectinput.size(); ++idx) {
-                        if (Course_Allocation[i][j][k] == subjectinput[idx]) {
-                            courseIndex = idx;
-                            break;
+                bool slotPrinted = false;
+                for (int i = 0; i < 23; ++i) {
+                    if (Course_Allocation[i][j][k] != "0") {
+                        if (!dayPrinted) {
+                            outfile << day << ",";
+                            dayPrinted = true;
+                            printedDays[k] = true;
+                        } else {
+                            outfile << ",";
                         }
+                        if(!timeprinted) {
+                            outfile << time << ",";
+                            timeprinted = true;
+                            printedTimes[k] = true;
+                        }
+                        else{
+                            outfile<< ",";
+                        }
+
+                        
+                        if (i == 0) outfile << "LT1";
+                        else if (i == 1) outfile << "LT2";
+                        else if (i == 2) outfile << "LT3";
+                        else if (i >= 3 && i <= 22) outfile << "CEP-" << (i + 1);
+                        outfile << "," << Course_Allocation[i][j][k] << ",";
+
+                        int courseIndex = -1;
+                        for (int idx = 0; idx < subjectinput.size(); ++idx) {
+                            if (Course_Allocation[i][j][k] == subjectinput[idx]) {
+                                courseIndex = idx;
+                                break;
+                            }
+                        }
+                        if (courseIndex != -1) {
+                            outfile << professor_nameinput[courseIndex] << ",";
+                            outfile << semesterinput[courseIndex] << ",";
+                            outfile << branchinput[courseIndex];
+                        }
+                        outfile << endl;
+                        slotPrinted = true;
                     }
-                    if (courseIndex != -1) {
-                        outfile << professor_nameinput[courseIndex] << ",";
-                        outfile << semesterinput[courseIndex] << ",";
-                        outfile << branchinput[courseIndex];
-                    }
-                    outfile << endl;
+                }
+                if (!slotPrinted && dayPrinted) {
+                    outfile << "," << time << endl;
                 }
             }
         }
@@ -334,6 +339,9 @@ void WriteTimetableToFile(const string& filename) {
 
     outfile.close();
 }
+
+
+
 void Semester_TimeTable() {
 
     cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;
