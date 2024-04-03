@@ -4,18 +4,27 @@
 #include <string>
 #include <sstream>
 using namespace std;
+
+
 vector<string> semesterinput;
 vector<string> subjectinput;
 vector<string> professor_nameinput;
 vector<string> creditinput;
 vector<string> branchinput;
+
+
 const int Total_Rooms = 23; 
 const int Total_slots = 5;
+
+
 vector<vector<vector<string> > > Course_Allocation(Total_Rooms, vector<vector<string> >(Total_slots, vector<string>(5, "0")));
+
+
 bool Is_Prof_Avail(int timing, int day, string Prof, int room);
 void Generate_Timetable();
 void WriteTimetableToFile(const string& filename);
 void Professor_TimeTable(const string& professorName);
+
 
 int main() {
     string semester;
@@ -65,40 +74,62 @@ int main() {
     return 0;
 }
 
-bool Is_Prof_Avail(int timing, int day, string Prof, int room) {
-    vector<string> code;
-    //code is the vector that contains all course of the Professor which is passed as argument
-    for (int i = 0; i < professor_nameinput.size(); ++i) {
-        if (Prof == professor_nameinput[i]) {
-            code.push_back(subjectinput[i]);
-        }
-    }
-     //the loop below  checks if any course of given Professor is already alocated in this slot or not
- if(timing>0)
- {
-      for(int t=timing-1;t<=timing;++t)
-      {
-        for (int j = 0; j < code.size(); ++j) {
-            for (int i = 0; i <= room; ++i) {
-                if (Course_Allocation[i][t][day] == code[j]) {
-                    return false;
-                }
-            }
-        }
-      }
- }
- else
- {
-     for (int j = 0; j < code.size(); ++j) {
-            for (int i = 0; i <= room; ++i) {
-                if (Course_Allocation[i][timing][day] == code[j]) {
-                    return false;
-                }
-            }
-        }
- }
-    return true;
+
+
+bool Is_Prof_Avail(int timing, int day, string Prof, int room) { 
+    vector<string> code; 
+    //code is the vector that contains all course of the Professor which is passed as argument 
+    for (int i = 0; i < professor_nameinput.size(); ++i) { 
+        if (Prof == professor_nameinput[i]) { 
+            code.push_back(subjectinput[i]); 
+        } 
+    } 
+     //the loop below  checks if any course of given Professor is already alocated in this slot or not 
+    if(timing<4) 
+        { 
+         if(timing>0) 
+         { 
+              for(int t=timing-1;t<=timing+1;++t) 
+              { 
+                for (int j = 0; j < code.size(); ++j) { 
+                    for (int i = 0; i <= room; ++i) { 
+                        if (Course_Allocation[i][t][day] == code[j]) { 
+                            return false; 
+                        } 
+                    } 
+                } 
+              } 
+         } 
+         else 
+         { 
+             for(int t=timing;t<=timing+1;++t) 
+              { 
+                for (int j = 0; j < code.size(); ++j) { 
+                    for (int i = 0; i <= room; ++i) { 
+                        if (Course_Allocation[i][t][day] == code[j]) { 
+                            return false; 
+                        } 
+                    } 
+                } 
+              } 
+         } 
+        } 
+        else 
+        { 
+            for(int t=timing-1;t<=timing;++t) 
+              { 
+                for (int j = 0; j < code.size(); ++j) { 
+                    for (int i = 0; i <= room; ++i) { 
+                        if (Course_Allocation[i][t][day] == code[j]) { 
+                            return false; 
+                        } 
+                    } 
+                } 
+              } 
+        } 
+    return true; 
 }
+
 
 void Generate_Timetable() {
     int course_index = 0;
@@ -115,6 +146,7 @@ void Generate_Timetable() {
         }
     }
 }
+
 
 void Professor_TimeTable(const string& professorName) {
     string filename = professorName + "_timetable.csv";
@@ -184,6 +216,8 @@ void Professor_TimeTable(const string& professorName) {
 
     outfile.close();
 }
+
+
 
 void WriteTimetableToFile(const string& filename) {
     ofstream outfile(filename);
