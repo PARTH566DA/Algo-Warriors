@@ -43,7 +43,7 @@ int main() {
     while (getline(input, perticularline)) {
         istringstream iss(perticularline);
         string sem, sub, pro_n, cre, br;
-        if (getline(iss, sem, ',') && getline(iss, sub, ',') && getline(iss, pro_n, ',') && getline(iss, cre, ',') && getline(iss, br, ' ')) {
+        if (getline(iss, sem, ',') && getline(iss, sub, ',') && getline(iss, pro_n, ',') && getline(iss, cre, ',') && getline(iss, br, ',')) {
             semesterinput.push_back(sem);
             subjectinput.push_back(sub);
             professor_nameinput.push_back(pro_n);
@@ -167,8 +167,6 @@ void Professor_TimeTable(const string& professorName) {
                             outfile << subjectinput[f] << ",";
                             outfile << semesterinput[f] << ",";
                             outfile << branchinput[f] << ",";
-                            outfile << ",";
-                            outfile << ",";
 
                             if (i == 0) outfile << "LT1" << ",";
                             else if (i == 1) outfile << "LT2" << ",";
@@ -200,11 +198,11 @@ void Professor_TimeTable(const string& professorName) {
                             else if(k==3) outfile << "Thursday" << ",";
                             else if(k==4) outfile << "Friday" << ",";
 
-                            if(j==0) outfile << "8:00 AM - 9:00 AM" << ",";
-                            else if(j==1) outfile << "9:00 AM - 10:00 AM" << ",";
-                            else if(j==2) outfile << "10:00 AM - 11:00 AM" << ",";
-                            else if(j==3) outfile << "11:00 AM - 12:00 PM" << ",";
-                            else if(j==4) outfile << "12:00 PM - 1:00 PM" << ",";
+                            if(j==0) outfile << "8:00 AM - 9:00 AM";
+                            else if(j==1) outfile << "9:00 AM - 10:00 AM";
+                            else if(j==2) outfile << "10:00 AM - 11:00 AM";
+                            else if(j==3) outfile << "11:00 AM - 12:00 PM";
+                            else if(j==4) outfile << "12:00 PM - 1:00 PM";
 
                             outfile << endl;
                         }
