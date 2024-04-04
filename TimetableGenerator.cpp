@@ -311,7 +311,26 @@ void WriteTimetableToFile(const string& filename) {
                         if (i == 0) outfile << "LT1";
                         else if (i == 1) outfile << "LT2";
                         else if (i == 2) outfile << "LT3";
-                        else if (i >= 3 && i <= 22) outfile << "CEP-" << (i + 1);
+                        else if (i == 3) outfile << "CEP-003";
+                        else if (i == 4) outfile << "CEP-102";
+                            else if (i == 5) outfile << "CEP-103";
+                            else if (i == 6) outfile << "CEP-104";
+                            else if (i == 7) outfile << "CEP-105";
+                            else if (i == 8) outfile << "CEP-106";
+                            else if (i == 9) outfile << "CEP-107";
+                            else if (i == 10) outfile << "CEP-108";
+                            else if (i == 11) outfile << "CEP-109";
+                            else if (i == 12) outfile << "CEP-110";
+                            else if (i == 13) outfile << "CEP-202";
+                            else if (i == 14) outfile << "CEP-203";
+                            else if (i == 15) outfile << "CEP-204";
+                            else if (i == 16) outfile << "CEP-205";
+                            else if (i == 17) outfile << "CEP-206";
+                            else if (i == 18) outfile << "CEP-207";
+                            else if (i == 19) outfile << "CEP-209";
+                            else if (i == 20) outfile << "CEP-210";
+                            else if (i == 21) outfile << "CEP-211";
+                            else if (i == 22) outfile << "CEP-212";
                         outfile << "," << Course_Allocation[i][j][k] << ",";
 
                         int courseIndex = -1;
@@ -412,8 +431,26 @@ void Semester_TimeTable() {
                             if (i == 0) outfile << "LT1" << ",";
                             else if (i == 1) outfile << "LT2" << ",";
                             else if (i == 2) outfile << "LT3" << ",";
-                            else if (i >= 3 && i <= 12) outfile << "CEP-" << (i + 1) << ",";
-                            else if (i >= 13 && i <= 22) outfile << "CEP-" << (i + 90) << ",";
+                            else if (i == 3) outfile << "CEP-003" << ",";
+                            else if (i == 4) outfile << "CEP-102" << ",";
+                            else if (i == 5) outfile << "CEP-103" << ",";
+                            else if (i == 6) outfile << "CEP-104" << ",";
+                            else if (i == 7) outfile << "CEP-105" << ",";
+                            else if (i == 8) outfile << "CEP-106" << ",";
+                            else if (i == 9) outfile << "CEP-107" << ",";
+                            else if (i == 10) outfile << "CEP-108" << ",";
+                            else if (i == 11) outfile << "CEP-109" << ",";
+                            else if (i == 12) outfile << "CEP-110" << ",";
+                            else if (i == 13) outfile << "CEP-202" << ",";
+                            else if (i == 14) outfile << "CEP-203" << ",";
+                            else if (i == 15) outfile << "CEP-204" << ",";
+                            else if (i == 16) outfile << "CEP-205" << ",";
+                            else if (i == 17) outfile << "CEP-206" << ",";
+                            else if (i == 18) outfile << "CEP-207" << ",";
+                            else if (i == 19) outfile << "CEP-209" << ",";
+                            else if (i == 20) outfile << "CEP-210" << ",";
+                            else if (i == 21) outfile << "CEP-211" << ",";
+                            else if (i == 22) outfile << "CEP-212" << ",";
                             outfile << endl;
                         }
                     }
