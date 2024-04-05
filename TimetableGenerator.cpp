@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <unordered_map>
+
 using namespace std;
 
 
@@ -11,6 +13,7 @@ vector<string> subjectinput;
 vector<string> professor_nameinput;
 vector<string> creditinput;
 vector<string> branchinput;
+unordered_map<string,string> shortToFullName;
 
 
 const int Total_Rooms = 23; 
@@ -27,6 +30,87 @@ void Professor_TimeTable(const string& professorName);
 void Semester_TimeTable(const string& Semester);
 
 int main() {
+
+    shortToFullName["AJ"] = "Abhishek Jindal";
+    shortToFullName["AKM"] = "Amit Mankodi";
+    shortToFullName["AG"] = "Anjan Ghosh";
+    shortToFullName["AR"] = "Arnab Ray";
+    shortToFullName["AT"] = "Aditya Tatu";
+    shortToFullName["AKR"] = "Anil K Roy";
+    shortToFullName["AT2"] = "Anuj Tawari";
+    shortToFullName["AMM"] = "Anish Mathuria";
+    shortToFullName["AR2"] = "Arpit Rana";
+    shortToFullName["BD"] = "Binita Desai";
+    shortToFullName["BK"] = "Bharani Kollipara";
+    shortToFullName["BC"] = "Bhaskar Chaudhury";
+    shortToFullName["BG"] = "Bakul Gohel";
+    shortToFullName["BM"] = "Biswajit Mishra";
+    shortToFullName["DKG"] = "Deepak K Ghodgaonkar";
+    shortToFullName["GD"] = "Gautam Dutta";
+    shortToFullName["GP"] = "Gopinath Panda";
+    shortToFullName["GV"] = "Gaurav Vaidya";
+    shortToFullName["HP"] = "Hemn Patil";
+    shortToFullName["JP"] = "JayPrakash";
+    shortToFullName["JM"] = "Jaydeep Mulherkar";
+    shortToFullName["JJ"] = "Jensen Joseph";
+    shortToFullName["PKS"] = "Kalyan Sasidhar";
+    shortToFullName["LS"] = "Lavneet Singh";
+    shortToFullName["MB"] = "Minal Bhise";
+    shortToFullName["MK"] = "Manish Khare";
+    shortToFullName["MK2"] = "Manish Kumar";
+    shortToFullName["MM"] = "Madhumita Mazumdar";
+    shortToFullName["MS"] = "Madhukant Sharma";
+    shortToFullName["MT"] = "Mukesh Tiwari";
+    shortToFullName["MKG"] = "Manish K Gupta";
+    shortToFullName["MKR"] = "Manoj K Raut";
+    shortToFullName["MLD"] = "Manik Lal Das";
+    shortToFullName["MVJ"] = "Manjunath V Joshi";
+    shortToFullName["NKS"] = "Nabin K Sahu";
+    shortToFullName["PM"] = "Prasenjit Majumder";
+    shortToFullName["PMJ"] = "Pokhar M Jat";
+    shortToFullName["PA"] = "Pritam Anand";
+    shortToFullName["PB"] = "Puneet Bhateja";
+    shortToFullName["PK"] = "Pankaj Kumar";
+    shortToFullName["PK2"] = "Prosenjit Kundu";
+    shortToFullName["RG"] = "Ranendu Ghosh";
+    shortToFullName["RLD"] = "Rajib L Das";
+    shortToFullName["RM"] = "Rahul Muthu";
+    shortToFullName["RC"] = "Rachit Chhaya";
+    shortToFullName["RM2"] = "Rahul Mishra";
+    shortToFullName["RP"] = "Rutu Parekh";
+    shortToFullName["SDG"] = "Sourish Dasgupta";
+    shortToFullName["SR"] = "Sreeja Rajendran";
+    shortToFullName["SS"] = "S Srivastava";
+    shortToFullName["SJ"] = "Shefali Jha";
+    shortToFullName["SRG"] = "Shweta R Garg";
+    shortToFullName["SB"] = "Shruti Bhilare";
+    shortToFullName["SM"] = "Srimanta Mandal";
+    shortToFullName["SB2"] = "Sudip Bera";
+    shortToFullName["SK"] = "Sujay Kadam";
+    shortToFullName["SP"] = "Supantha Pandit";
+    shortToFullName["ST"] = "Saurabh Tiwari";
+    shortToFullName["TKM"] = "Tapas K Maity";
+    shortToFullName["VP"] = "Vishvajit Pandya";
+    shortToFullName["VS"] = "V Sunitha";
+    shortToFullName["VSP"] = "Vinay S Palaparthy";
+    shortToFullName["YA"] = "Yash Agrawal";
+    shortToFullName["YV"] = "Yash Vasavada";
+    shortToFullName["NDJ"] = "Naresh D Jotwani";
+    shortToFullName["TB"] = "gata Bandyopadhyay";
+    shortToFullName["DNC"] = "Dipankar Nag Chaudhury";
+    shortToFullName["GKS"] = "Gaurav Kumar Singh";
+    shortToFullName["CJ"] = "Cyril Jos";
+    shortToFullName["AM"] = "Amishal Modi";
+    shortToFullName["NIKITADESAI"] = "Nikita Desai";
+    shortToFullName["ANIRBANDUTTAGUPTA"] = "Anirban Duttagupta";
+    shortToFullName["KUNTALADASGUPTA"] =  "Kuntala Dasgupta";
+    shortToFullName["SANDIP MODHA"] = "Sandip Modha";
+    shortToFullName["NANDINISAHA"] = "Nandini Saha";
+    shortToFullName["MAYANKLOONKAR"] = "Mayank Loonkar";
+    shortToFullName["PROSENJITGANGULY"] = "Prosenjit Ganguly";
+    shortToFullName["RUDRANILDAS"] = "Rudranil Das";
+
+    
     string semester;
     cout << "Enter semester (winter/autumn): ";
     cin >> semester;
@@ -191,7 +275,7 @@ void Generate_Timetable() {
 
 
 void Professor_TimeTable(const string& professorName) {
-    string filename = professorName + "_timetable.csv";
+    string filename = shortToFullName[professorName] + "_timetable.csv";
     ofstream outfile(filename);
     if (!outfile) {
         cerr << "Error: Unable to open file " << filename << endl;
