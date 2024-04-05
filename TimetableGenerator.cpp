@@ -24,7 +24,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room);
 void Generate_Timetable();
 void WriteTimetableToFile(const string& filename);
 void Professor_TimeTable(const string& professorName);
-void Semester_TimeTable();
+void Semester_TimeTable(const string& Semester);
 
 int main() {
     string semester;
@@ -70,7 +70,17 @@ int main() {
         cout << endl;
         cout << "Time table for " << proff_name << " has been saved successfully" << endl;
     }
-    Semester_TimeTable();
+    cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;
+    string yn;
+    cin >> yn;
+    string Semester;
+    if(yn=="YES"){
+        cout << "Enter Semester Number.";
+        cin >> Semester;
+        Semester_TimeTable(Semester);
+        cout << endl;
+        cout << "Time table for " << Semester << " semester has been saved successfully" << endl;
+    }
     return 0;
 }
 
@@ -361,17 +371,7 @@ void WriteTimetableToFile(const string& filename) {
 
 
 
-void Semester_TimeTable() {
-
-    cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;
-    string yesno;
-    cin >> yesno;
-    string Semester;
-    if(yesno=="YES"){
-        cout << "Enter Semester Number.";
-        cin >> Semester;
-    }
-
+void Semester_TimeTable(const string& Semester) {
     string filename = Semester + "_timetable.csv";
     ofstream outfile(filename);
     if (!outfile) {
