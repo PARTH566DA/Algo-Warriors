@@ -14,6 +14,7 @@ vector<string> professor_nameinput;
 vector<string> creditinput;
 vector<string> branchinput;
 unordered_map<string,string> shortToFullName;
+unordered_map<string,string> branch;
 
 
 const int Total_Rooms = 23; 
@@ -30,6 +31,21 @@ void Professor_TimeTable(const string& professorName);
 void Semester_TimeTable(const string& Semester);
 
 int main() {
+
+    branch["ICT"] = "B.Tech ICT";
+    branch["CS"] = "B.Tech ICT+CS";
+    branch["CSEVD"] = "B.Tech ICT+CS; EVD";
+    branch["CSEVDCSMNC"] = "B.Tech ICT+CS; MNC; EVD";
+    branch["EVD"] = "B.Tech EVD";
+    branch["MNC"] = "B.Tech MnC";
+    branch["CSMNC"] = "B.Tech ICT+CS; MnC";
+    branch["MICT"] = "M.Tech ICT";
+    branch["MEC"] = "M.Tech EC";
+    branch["MSCIT"] = "M.Sc IT";
+    branch["MSCDS"] = "M.Sc DS";
+    branch["MSCAA"] = "M.Sc AA";
+    branch["MDES"] = "M.Des CD";
+
 
     shortToFullName["AJ"] = "Abhishek Jindal";
     shortToFullName["AKM"] = "Amit Mankodi";
@@ -112,10 +128,23 @@ int main() {
 
     
     string semester;
+    label:
+
     cout << "Enter semester (winter/autumn): ";
     cin >> semester;
-    
-    string filename = (semester == "winter") ? "winter.txt" : "autumn.txt";
+
+    string filename;
+    if(semester == "winter"){
+        filename = "winter.txt";
+    }
+    else if(semester == "autumn"){
+        filename = "autumn.txt";
+    }
+    else{
+        cout << endl << "Please Enter valid Input. Try again." << endl << endl;
+        goto label;
+    }
+
     ifstream input(filename);
     
     if (!input) {
@@ -304,7 +333,7 @@ void Professor_TimeTable(const string& professorName) {
 
                             outfile << subjectinput[f] << ",";
                             outfile << semesterinput[f] << ",";
-                            outfile << branchinput[f] << ",";
+                            outfile << branch[branchinput[f]] << ",";
 
                             if (i == 0) outfile << "LT1" << ",";
                             else if (i == 1) outfile << "LT2" << ",";
@@ -437,7 +466,7 @@ void WriteTimetableToFile(const string& filename) {
                         if (courseIndex != -1) {
                             outfile << professor_nameinput[courseIndex] << ",";
                             outfile << semesterinput[courseIndex] << ",";
-                            outfile << branchinput[courseIndex];
+                            outfile << branch[branchinput[courseIndex]];
                         }
                         outfile << endl;
                         slotPrinted = true;
@@ -511,7 +540,7 @@ void Semester_TimeTable(const string& Semester) {
 
                             outfile << subjectinput[f] << ",";
                             outfile << professor_nameinput[f] << ",";
-                            outfile << branchinput[f] << ",";
+                            outfile << branch[branchinput[f]] << ",";
                             if (i == 0) outfile << "LT1" << ",";
                             else if (i == 1) outfile << "LT2" << ",";
                             else if (i == 2) outfile << "LT3" << ",";
