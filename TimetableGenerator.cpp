@@ -288,19 +288,23 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
 
 void Generate_Timetable() {
     int course_index = 0;
-    for (int i = 0; i < Total_Rooms; i++) {
-        for (int j = 0; j < Total_slots; j++) {
-            for (int k = 0; k < 5; k++) {
-                if (course_index < subjectinput.size() && Is_Prof_Avail(j, k, professor_nameinput[course_index], i,course_index) && stoi(creditinput[course_index]) > 0) {
-                    Course_Allocation[i][j][k] = subjectinput[course_index];
-                    creditinput[course_index] = to_string(stoi(creditinput[course_index]) - 1); 
-                    if(stoi(creditinput[course_index])==0)
-                    course_index++; 
-                }
-            }
-        }
-    }
-}
+
+    while(course_index < subjectinput.size())
+        {
+           for (int i = 0; i < Total_Rooms; i++) {
+               for (int j = 0; j < Total_slots; j++) {
+                   for (int k = 0; k < 5; k++) {
+                       if (Course_Allocation[i][j][k]=="0" && course_index < subjectinput.size() && Is_Prof_Avail(j, k, professor_nameinput[course_index], i,course_index) && stoi(creditinput[course_index]) > 0) {
+                           Course_Allocation[i][j][k] = subjectinput[course_index];
+                           creditinput[course_index] = to_string(stoi(creditinput[course_index]) - 1); 
+                           if(stoi(creditinput[course_index])==0)
+                           course_index++; 
+                      }
+                   }
+               }
+           }
+       }
+  }
 
 
 void Professor_TimeTable(const string& professorName) {
