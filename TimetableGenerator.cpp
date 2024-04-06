@@ -203,6 +203,14 @@ bool string_match(int branch_index,int k)
     vector<string>curr_branch;
     curr_branch.push_back(branchinput[k]);
     branch_index2.push_back(branchinput[branch_index]);
+    if(curr_branch[0][0]=='M'&&branch_index2[0][0]!='M')
+    {
+        return false;
+    }
+    if(curr_branch[0][0]!='M'&&branch_index2[0][0]=='M')
+    {
+        return false;
+    }
     bool found = (curr_branch[0].find(branch_index2[0]) != string::npos);
 
     if (found) {
