@@ -295,17 +295,18 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
 
 
 void Generate_Timetable() {
-    int course_index = 0;
+    int course_index = 0;  // Initialize the index to keep track of the current course being allocated.
 
-    while(course_index < subjectinput.size())
+    while(course_index < subjectinput.size())  // Loop until all courses are allocated.
         {
-           for (int i = 0; i < Total_Rooms; i++) {
-               for (int j = 0; j < Total_slots; j++) {
-                   for (int k = 0; k < 5; k++) {
+           for (int i = 0; i < Total_Rooms; i++) {  // Loop through each room.
+               for (int j = 0; j < Total_slots; j++) {  // Loop through each time slot.
+                   for (int k = 0; k < 5; k++) {       // Loop through each day of the week.
+                       /*Check it the current slot in the current room on the current day is available, the professor is free to teach the course, and the course still has credit left.*/
                        if (Course_Allocation[i][j][k]=="0" && course_index < subjectinput.size() && Is_Prof_Avail(j, k, professor_nameinput[course_index], i,course_index) && stoi(creditinput[course_index]) > 0) {
-                           Course_Allocation[i][j][k] = subjectinput[course_index];
-                           creditinput[course_index] = to_string(stoi(creditinput[course_index]) - 1); 
-                           if(stoi(creditinput[course_index])==0)
+                           Course_Allocation[i][j][k] = subjectinput[course_index];   // Allocate the course to the current slot.
+                           creditinput[course_index] = to_string(stoi(creditinput[course_index]) - 1); //Decrease the credit by one.
+                           if(stoi(creditinput[course_index])==0)   // If the course has no remaining credits, move to the next course.
                            course_index++; 
                       }
                    }
