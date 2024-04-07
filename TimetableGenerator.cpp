@@ -128,13 +128,13 @@ int main() {
     shortToFullName["PROSENJITGANGULY"] = "Prosenjit Ganguly";
     shortToFullName["RUDRANILDAS"] = "Rudranil Das";
 
-    
+    //Read data from a file based on the semester input and store it in corresponding vectors.
     string semester;
     label:
 
     cout << "Enter semester (winter/autumn): ";
     cin >> semester;
-
+    // Check if the file can be opened. If not, display an error message and exit.
     string filename;
     if(semester == "winter"){
         filename = "winter.txt";
@@ -153,12 +153,15 @@ int main() {
         cerr << "Error: Unable to open file " << filename << endl;
         return 1;
     }
-
+    
+    // Read each line from the file and extract relevant information.
     string perticularline;
     while (getline(input, perticularline)) {
+        // Parse each line to extract semester, subject, professor name, credit, and branch.
         istringstream iss(perticularline);
         string sem, sub, pro_n, cre, br;
         if (getline(iss, sem, ',') && getline(iss, sub, ',') && getline(iss, pro_n, ',') && getline(iss, cre, ',') && getline(iss, br, ',')) {
+            // Store the extracted information into corresponding vectors.
             semesterinput.push_back(sem);
             subjectinput.push_back(sub);
             professor_nameinput.push_back(pro_n);
@@ -199,6 +202,7 @@ int main() {
     return 0;
 }
 
+// the below function is Check if two branch codes match or have a similar prefix.
 bool string_match(int branch_index,int k)
 {
     vector<string>branch_index2;
@@ -213,11 +217,13 @@ bool string_match(int branch_index,int k)
     {
         return false;
     }
+    // Check if branch codes match or have a similar prefix
     bool found = (curr_branch[0].find(branch_index2[0]) != string::npos);
 
     if (found) {
         return true;
     } else {
+        // If branch codes do not match, check if they have a similar prefix
         bool found = (branch_index2[0].find(curr_branch[0]) != string::npos);
         if(found){
             return true;
@@ -241,6 +247,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
         { 
          if(timing>0) 
          { 
+             // Check neighboring slots if timing is not at the start or end of the day
               for(int t=timing-1;t<=timing+1;++t) 
               { 
                 for (int j = 0; j < code.size(); ++j) { 
@@ -254,6 +261,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
          } 
          else 
          { 
+             // Check neighboring slots if timing is at the start of the day
              for(int t=timing;t<=timing+1;++t) 
               { 
                 for (int j = 0; j < code.size(); ++j) { 
@@ -268,6 +276,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
         } 
         else 
         { 
+            // Check neighboring slots if timing is at the end of the day
             for(int t=timing-1;t<=timing;++t) 
               { 
                 for (int j = 0; j < code.size(); ++j) { 
@@ -279,6 +288,7 @@ bool Is_Prof_Avail(int timing, int day, string Prof, int room,int branch_index) 
                 } 
               } 
         } 
+    // Check if there is a course scheduled for the same branch and semester
     for(int i=0;i<room;++i)
    {
     for(int k=0;k<subjectinput.size();++k)
