@@ -184,6 +184,7 @@ int main() {
     }
 
     Generate_Timetable(0,Course_Allocation,subjectinput,professor_nameinput,creditinput,Total_slots);
+    cout << endl << "Timetable has been saved." << endl << endl;
 
     cout << "Do you want time table with respect to Professor? (YES/NO)" << endl;     //Asked the user if he want timetable with respect to professor or not? 
     string yesno;
@@ -203,7 +204,7 @@ int main() {
     cin >> yn;
     string Semester;
     if(yn=="YES"){
-        cout << "Enter Semester Number.";           
+        cout << endl << "Enter Semester Number." << endl;           
         cin >> Semester;
         Semester_TimeTable(Semester);
         cout << endl;
@@ -219,7 +220,7 @@ int main() {
         //Read data from a file based on the semester input(for Elective course) and store it in corresponding vectors.
         string semester_elective;
         label1:
-        cout << "Enter semester for Elective (winter/autumn): ";
+        cout << endl << "Enter semester for Elective (winter/autumn): ";
         cin >> semester_elective;
         
         // Check if the Elective_file can be opened. If not, display an error message and exit.
@@ -262,7 +263,7 @@ int main() {
         Generate_Timetable(1,Course_Allocation_elective,subjectinput_elective,professor_nameinput_elective,creditinput_elective,Total_slots_elective);
         WriteTimetableToFile_elective("timetable_elective.csv");
 
-        cout << "Time table for elective has been saved." << endl;
+        cout << endl << "Time table for elective has been saved." << endl;
 
     }
     return 0;
