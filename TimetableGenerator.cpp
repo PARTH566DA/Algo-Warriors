@@ -8,27 +8,27 @@
 using namespace std;
 
 
-vector<string> semesterinput;
-vector<string> subjectinput;
-vector<string> professor_nameinput;
-vector<string> creditinput;
-vector<string> branchinput;
-unordered_map<string,string> shortToFullName;
-unordered_map<string,string> branch;
+vector<string> semesterinput;                    //This is a vector to store semester number for each course
+vector<string> subjectinput;                     //This is a vector to store course code for each course
+vector<string> professor_nameinput;              //This is a vector to store professor code for each course
+vector<string> creditinput;                      //This is a vector to store frequency in a week of each course
+vector<string> branchinput;                      //This is a vector to store branch name for each course
+unordered_map<string,string> shortToFullName;    //This is an unordered map to map professor code with his full name
+unordered_map<string,string> branch;             //This is an unordered map to map branch short name to full detailed branch name
 
 
-const int Total_Rooms = 23; 
-const int Total_slots = 5;
+const int Total_Rooms = 23;         //This is the total room available for allocation
+const int Total_slots = 5;          //This is the total slots available on each day for allocation
 
 
-vector<vector<vector<string> > > Course_Allocation(Total_Rooms, vector<vector<string> >(Total_slots, vector<string>(5, "0")));
+vector<vector<vector<string> > > Course_Allocation(Total_Rooms, vector<vector<string> >(Total_slots, vector<string>(5, "0")));  //Main vector to store allocatrd course
 
 
-bool Is_Prof_Avail(int timing, int day, string Prof, int room);
-void Generate_Timetable();
-void WriteTimetableToFile(const string& filename);
-void Professor_TimeTable(const string& professorName);
-void Semester_TimeTable(const string& Semester);
+bool Is_Prof_Avail(int timing, int day, string Prof, int room);   //Check professor availibility
+void Generate_Timetable();        //Allocate the courses
+void WriteTimetableToFile(const string& filename);        //Print Timetable in csv file
+void Professor_TimeTable(const string& professorName);    //Print TimeTable with respect to professor in csv file
+void Semester_TimeTable(const string& Semester);          //Print TimeTable for a particular semester in csv file
 
 int main() {
 
@@ -172,25 +172,25 @@ int main() {
     WriteTimetableToFile("timetable.csv");
     cout << endl << "Time Table has been Saved" << endl << endl << endl;
 
-    cout << "Do you want time table with respect to Professor? (YES/NO)" << endl;
+    cout << "Do you want time table with respect to Professor? (YES/NO)" << endl;     //Asked the user if he want timetable with respect to professor or not? 
     string yesno;
     cin >> yesno;
     cout << endl;
     
     if(yesno=="YES"){
         string proff_name;
-        cout << "Enter the Professor code for whome you need Timetable." << endl;
+        cout << "Enter the Professor code for whome you need Timetable." << endl;       //Asked for professor code for generating time table
         cin >> proff_name;
         Professor_TimeTable(proff_name);
         cout << endl;
         cout << "Time table for " << proff_name << " has been saved successfully" << endl;
     }
-    cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;
+    cout << endl << "Do you want Time Table according to semester? (YES/NO)" << endl;        //Asked the user if he want timetable for a particular semester or not?
     string yn;
     cin >> yn;
     string Semester;
     if(yn=="YES"){
-        cout << "Enter Semester Number.";
+        cout << "Enter Semester Number.";         //Asked for semester number for generating time table
         cin >> Semester;
         Semester_TimeTable(Semester);
         cout << endl;
