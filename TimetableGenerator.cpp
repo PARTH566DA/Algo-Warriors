@@ -505,15 +505,19 @@ void WriteTimetableToFile(const string& filename) {
 
 
 void Semester_TimeTable(const string& Semester) {
+    // Construct the filename for the timetable CSV file based on the semester.
     string filename = Semester + "_timetable.csv";
+    // Open the output file stream for writing the timetable.
     ofstream outfile(filename);
-    if (!outfile) {
+    if (!outfile) {   // Check if the file stream is successfully opened.
         cerr << "Error: Unable to open file " << filename << endl;
         return;
     }
-
+    
+    // Write headers for the timetable CSV file.
     outfile << "Day,Time,Course,Professor,Branch,Room" << endl;
 
+    // Define vectors for days of the week and time slots.
     vector<string> days;
     days.push_back("Monday");
     days.push_back("Tuesday");
@@ -528,10 +532,11 @@ void Semester_TimeTable(const string& Semester) {
     times.push_back("11:00 AM - 12:00 PM");
     times.push_back("12:00 PM - 1:00 PM");
 
+    // Arrays to keep track of whether each day and time slot has been printed.
     bool printedDays[5] = {false};
     bool printedTimes[5] = {false};
 
-    for (int k = 0; k < 5; k++) {
+    for (int k = 0; k < 5; k++) {   // Loop through each day of the week.
         string day = days[k];
 
         if (!printedDays[k]) {
@@ -540,9 +545,11 @@ void Semester_TimeTable(const string& Semester) {
                 string time = times[j];
                 bool timeprinted = false;
                 bool slotPrinted = false;
-                for (int i = 0; i < Total_Rooms; i++) { 
+                for (int i = 0; i < Total_Rooms; i++) {   // Loop through each room and professor input.
                     for (int f = 0; f < professor_nameinput.size(); f++) { 
+                        // Check if the course matches the semester and day.
                         if (semesterinput[f] == Semester && subjectinput[f] == Course_Allocation[i][j][k]) { 
+                            // Print day if it's not already printed.
                             if (!dayPrinted) {
                                 outfile << day << ",";
                                 dayPrinted = true;
@@ -550,6 +557,8 @@ void Semester_TimeTable(const string& Semester) {
                             } else {
                                 outfile << ",";
                             }
+
+                            // Print time if it's not already printed.
                             if (!timeprinted) {
                                 outfile << time << ",";
                                 timeprinted = true;
@@ -558,9 +567,12 @@ void Semester_TimeTable(const string& Semester) {
                                 outfile << ",";
                             }
 
+                            // Write course details: name, professor, branch, and room.
                             outfile << subjectinput[f] << ",";
                             outfile << professor_nameinput[f] << ",";
                             outfile << branch[branchinput[f]] << ",";
+
+                            // Write room based on its index.
                             if (i == 0) outfile << "LT1" << ",";
                             else if (i == 1) outfile << "LT2" << ",";
                             else if (i == 2) outfile << "LT3" << ",";
@@ -584,6 +596,7 @@ void Semester_TimeTable(const string& Semester) {
                             else if (i == 20) outfile << "CEP-210" << ",";
                             else if (i == 21) outfile << "CEP-211" << ",";
                             else if (i == 22) outfile << "CEP-212" << ",";
+
                             outfile << endl;
                         }
                     }
@@ -592,5 +605,5 @@ void Semester_TimeTable(const string& Semester) {
         }
     }
 
-    outfile.close();
+    outfile.close();   // Close the output file stream.
 }
