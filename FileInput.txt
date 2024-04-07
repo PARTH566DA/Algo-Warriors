@@ -1,24 +1,25 @@
-﻿string semester;
+//Read data from a file based on the semester input and store it in corresponding vectors.
+string semester;
 cout << "Enter semester (winter/autumn): ";
 cin >> semester;
+// Check if the file can be opened. If not, display an error message and exit.
 string filename = (semester == "winter") ? "winter.txt" : "autmn.txt";
 ifstream input(filename);
-
-
 if (!input) 
 {
     cout << "Error: Unable to open file " << filename << endl;
     return 1;
 }
-
-
+// Read each line from the file and extract relevant information.
 string perticularline;
 while (getline(input, perticularline))
 {
+// Parse each line to extract semester, subject, professor name, credit, and branch. Store them into respective vectors.
 istringstream iss(perticularline);
 string sem, sub, pro_n, cre, br;
 if (getline(iss, sem, ',') && getline(iss, sub, ',') && getline(iss, pro_n, ',') && getline(iss, cre, ',') && getline(iss, br, ' ')) 
 {
+// Store the extracted information into corresponding vectors.
     semesterinput.push_back(sem);
     subjectinput.push_back(sub);
     professor_nameinput.push_back(pro_n);
