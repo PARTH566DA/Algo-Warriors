@@ -387,46 +387,49 @@ void Professor_TimeTable(const string& professorName) {
 
 
 void WriteTimetableToFile(const string& filename) {
-    ofstream outfile(filename);
-    if (!outfile) {
+    ofstream outfile(filename);  // Open the output file stream for writing the timetable.
+    if (!outfile) {              // Check if the file stream is successfully opened.
         cerr << "Error: Unable to open file " << filename << endl;
         return;
     }
 
-    // Write headers
+    // Write headers for the timetable csv file.
     outfile << "Day,Time,Room,Course,Professor,Semester,Branch" << endl;
 
-    vector<string> days;
+    vector<string> days;        // Define vectors for days of the week.
     days.push_back("Monday");
     days.push_back("Tuesday");
     days.push_back("Wednesday");
     days.push_back("Thursday");
     days.push_back("Friday");
 
-    vector<string> times;
+    vector<string> times;       // Define vectors for time slots.
     times.push_back("8:00 AM - 9:00 AM");
     times.push_back("9:00 AM - 10:00 AM");
     times.push_back("10:00 AM - 11:00 AM");
     times.push_back("11:00 AM - 12:00 PM");
     times.push_back("12:00 PM - 1:00 PM");
 
+    // Arrays to keep track of whether each day and time slot has been printed.
     bool printedDays[5] = {false};
     bool printedTimes[5] = {false};
 
 
-    for (int k = 0; k < 5; ++k) {
+    for (int k = 0; k < 5; ++k) {      // Loop through each day of the week.
         string day = days[k];
 
         // Check if the day has been printed already
         if (!printedDays[k]) {
             bool dayPrinted = false;
-            for (int j = 0; j < 5; ++j) {
+            for (int j = 0; j < 5; ++j) {      // Loop through each time slot.
                 string time=times[j];
                 bool timeprinted = false;
 
                 bool slotPrinted = false;
-                for (int i = 0; i < 23; ++i) {
-                    if (Course_Allocation[i][j][k] != "0") {
+                for (int i = 0; i < 23; ++i) {        // Loop through each room.
+                    if (Course_Allocation[i][j][k] != "0") {        // Check if a course is allocated in the current room, time slot, and day.
+
+                        // Print day if it's not already printed.
                         if (!dayPrinted) {
                             outfile << day << ",";
                             dayPrinted = true;
@@ -434,6 +437,8 @@ void WriteTimetableToFile(const string& filename) {
                         } else {
                             outfile << ",";
                         }
+
+                        // Print time if it's not already printed.
                         if(!timeprinted) {
                             outfile << time << ",";
                             timeprinted = true;
@@ -443,7 +448,7 @@ void WriteTimetableToFile(const string& filename) {
                             outfile<< ",";
                         }
 
-                        
+                        // Print room based on its index.
                         if (i == 0) outfile << "LT1";
                         else if (i == 1) outfile << "LT2";
                         else if (i == 2) outfile << "LT3";
@@ -469,6 +474,7 @@ void WriteTimetableToFile(const string& filename) {
                             else if (i == 22) outfile << "CEP-212";
                         outfile << "," << Course_Allocation[i][j][k] << ",";
 
+                         // Find the index of the course in the input vectors.
                         int courseIndex = -1;
                         for (int idx = 0; idx < subjectinput.size(); ++idx) {
                             if (Course_Allocation[i][j][k] == subjectinput[idx]) {
@@ -476,13 +482,14 @@ void WriteTimetableToFile(const string& filename) {
                                 break;
                             }
                         }
+                         // If course found, write professor, semester, and branch.
                         if (courseIndex != -1) {
                             outfile << professor_nameinput[courseIndex] << ",";
                             outfile << semesterinput[courseIndex] << ",";
                             outfile << branch[branchinput[courseIndex]];
                         }
                         outfile << endl;
-                        slotPrinted = true;
+                        slotPrinted = true;   // Mark that a course is printed in this slot
                     }
                 }
                 if (!slotPrinted && dayPrinted) {
@@ -491,7 +498,7 @@ void WriteTimetableToFile(const string& filename) {
             }
         }
     }
-
+    // Close the output file stream.
     outfile.close();
 }
 
