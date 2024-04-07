@@ -32,6 +32,7 @@ void Semester_TimeTable(const string& Semester);
 
 int main() {
 
+    // Mapping of branch codes to their full names.
     branch["ICT"] = "B.Tech ICT";
     branch["CS"] = "B.Tech ICT+CS";
     branch["CSEVD"] = "B.Tech ICT+CS; EVD";
@@ -47,6 +48,7 @@ int main() {
     branch["MDES"] = "M.Des CD";
 
 
+    // Mapping of short form of professor names to their full names.
     shortToFullName["AJ"] = "Abhishek Jindal";
     shortToFullName["AKM"] = "Amit Mankodi";
     shortToFullName["AG"] = "Anjan Ghosh";
@@ -317,8 +319,12 @@ void Generate_Timetable() {
 
 
 void Professor_TimeTable(const string& professorName) {
+
+    // Construct the filename for the professor's timetable CSV file.
     string filename = shortToFullName[professorName] + "_timetable.csv";
-    ofstream outfile(filename);
+    ofstream outfile(filename);   // Open the output file stream for writing the timetable.
+
+    // Check if the file stream is successfully opened.
     if (!outfile) {
         cerr << "Error: Unable to open file " << filename << endl;
         return;
@@ -326,11 +332,13 @@ void Professor_TimeTable(const string& professorName) {
 
     // Write headers
     outfile << "Day,Time,Course,Semester,Branch,Room" << endl;
-    for(int f = 0; f < professor_nameinput.size(); f++) {
-        if(professor_nameinput[f] == professorName) {
+    for(int f = 0; f < professor_nameinput.size(); f++) {    // Iterate through each entry in the professor_nameinput vector.
+        if(professor_nameinput[f] == professorName) {        // Check if the current entry matches the specified professorName.
+            // Iterate through each room, time slot, and day.
             for (int i = 0; i < Total_Rooms; i++) {
                 for (int j = 0; j < Total_slots; j++) {
                     for (int k = 0; k < 5; k++) {
+                        // If the course matches the current entry, write its details to the CSV file.
                         if(subjectinput[f] == Course_Allocation[i][j][k]) {
                             if(k==0) outfile << "Monday" << ",";
                             else if(k==1) outfile << "Tuesday" << ",";
@@ -381,7 +389,7 @@ void Professor_TimeTable(const string& professorName) {
         }
     }
 
-    outfile.close();
+    outfile.close();   // Close the output file stream.
 }
 
 
