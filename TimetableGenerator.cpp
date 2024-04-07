@@ -319,79 +319,76 @@ void Generate_Timetable() {
 
 
 void Professor_TimeTable(const string& professorName) {
+    
 
-    // Construct the filename for the professor's timetable CSV file.
     string filename = shortToFullName[professorName] + "_timetable.csv";
-    ofstream outfile(filename);   // Open the output file stream for writing the timetable.
-
-    // Check if the file stream is successfully opened.
+    ofstream outfile(filename);
     if (!outfile) {
         cerr << "Error: Unable to open file " << filename << endl;
         return;
     }
 
+    vector<string> days;        // Define vectors for days of the week.
+    days.push_back("Monday");
+    days.push_back("Tuesday");
+    days.push_back("Wednesday");
+    days.push_back("Thursday");
+    days.push_back("Friday");
+
+    vector<string> times;       // Define vectors for time slots.
+    times.push_back("8:00 AM - 9:00 AM");
+    times.push_back("9:00 AM - 10:00 AM");
+    times.push_back("10:00 AM - 11:00 AM");
+    times.push_back("11:00 AM - 12:00 PM");
+    times.push_back("12:00 PM - 1:00 PM");
+
+    outfile << "Day,Timing,Course,Semester,Branch" << endl;
+
+
     // Write headers
-    outfile << "Day,Time,Course,Semester,Branch,Room" << endl;
-    for(int f = 0; f < professor_nameinput.size(); f++) {    // Iterate through each entry in the professor_nameinput vector.
-        if(professor_nameinput[f] == professorName) {        // Check if the current entry matches the specified professorName.
-            // Iterate through each room, time slot, and day.
+    for(int k = 0; k < 5; k++) {
+        string day = days[k];
+        bool dayPrinted = false;
+
+        for(int j = 0; j < Total_slots; j++) {
+            string time = times[j];
+            bool timeprinted = false;
+
             for (int i = 0; i < Total_Rooms; i++) {
-                for (int j = 0; j < Total_slots; j++) {
-                    for (int k = 0; k < 5; k++) {
-                        // If the course matches the current entry, write its details to the CSV file.
-                        if(subjectinput[f] == Course_Allocation[i][j][k]) {
-                            if(k==0) outfile << "Monday" << ",";
-                            else if(k==1) outfile << "Tuesday" << ",";
-                            else if(k==2) outfile << "Wednesday" << ",";
-                            else if(k==3) outfile << "Thursday" << ",";
-                            else if(k==4) outfile << "Friday" << ",";
-
-                            if(j==0) outfile << "8:00 AM - 9:00 AM" << ",";
-                            else if(j==1) outfile << "9:00 AM - 10:00 AM" << ",";
-                            else if(j==2) outfile << "10:00 AM - 11:00 AM" << ",";
-                            else if(j==3) outfile << "11:00 AM - 12:00 PM" << ",";
-                            else if(j==4) outfile << "12:00 PM - 1:00 PM" << ",";
-
-                            outfile << subjectinput[f] << ",";
-                            outfile << semesterinput[f] << ",";
-                            outfile << branch[branchinput[f]] << ",";
-
-                            if (i == 0) outfile << "LT1" << ",";
-                            else if (i == 1) outfile << "LT2" << ",";
-                            else if (i == 2) outfile << "LT3" << ",";
-                            else if (i == 3) outfile << "CEP-003" << ",";
-                            else if (i == 4) outfile << "CEP-102" << ",";
-                            else if (i == 5) outfile << "CEP-103" << ",";
-                            else if (i == 6) outfile << "CEP-104" << ",";
-                            else if (i == 7) outfile << "CEP-105" << ",";
-                            else if (i == 8) outfile << "CEP-106" << ",";
-                            else if (i == 9) outfile << "CEP-107" << ",";
-                            else if (i == 10) outfile << "CEP-108" << ",";
-                            else if (i == 11) outfile << "CEP-109" << ",";
-                            else if (i == 12) outfile << "CEP-110" << ",";
-                            else if (i == 13) outfile << "CEP-202" << ",";
-                            else if (i == 14) outfile << "CEP-203" << ",";
-                            else if (i == 15) outfile << "CEP-204" << ",";
-                            else if (i == 16) outfile << "CEP-205" << ",";
-                            else if (i == 17) outfile << "CEP-206" << ",";
-                            else if (i == 18) outfile << "CEP-207" << ",";
-                            else if (i == 19) outfile << "CEP-209" << ",";
-                            else if (i == 20) outfile << "CEP-210" << ",";
-                            else if (i == 21) outfile << "CEP-211" << ",";
-                            else if (i == 22) outfile << "CEP-212" << ",";
-
-                            
-                            outfile << endl;
+                for(int f = 0; f < professor_nameinput.size(); f++) {
+                    if(professor_nameinput[f] == professorName && subjectinput[f] == Course_Allocation[i][j][k]) {
+                        if (!dayPrinted) {
+                            outfile << day << ",";
+                            dayPrinted = true;
+                        } else {
+                            outfile << ",";
                         }
+
+                        // Print time if it's not already printed.
+                        if (!timeprinted) {
+                            outfile << time << ",";
+                            timeprinted = true;
+                        } else {
+                            outfile << ",";
+                        }
+
+                        outfile << subjectinput[f] << ",";
+                        outfile << semesterinput[f] << ",";
+                        outfile << branch[branchinput[f]] << ",";
+
+                        // Assuming i corresponds to room index, print room name based on index
+                        if (i == 0) outfile << "LT1";
+                        else if (i == 1) outfile << "LT2";
+                        // add more else-if conditions for other rooms
+                        outfile << endl;
                     }
                 }
             }
         }
     }
 
-    outfile.close();   // Close the output file stream.
+    outfile.close();
 }
-
 
 
 void WriteTimetableToFile(const string& filename) {
