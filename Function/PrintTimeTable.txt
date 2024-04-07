@@ -1,0 +1,93 @@
+/* This is a function to print TimeTable,but then we edit this function to generate Timetable in csv file format,which is in TimeTableGenerator.cpp file.*/
+void PrintTimeTable() {
+    for(int k = 0; k < 5; ++k) {
+        if(k==0)
+            cout << "Monday TimeTable:" << endl;
+        if(k==1)
+            cout << "Tuesday TimeTable:" << endl;
+        if(k==2)
+            cout << "Wednesday TimeTable:" << endl;
+        if(k==3)
+            cout << "Thursday TimeTable:" << endl;
+        if(k==4)
+            cout << "Friday TimeTable:" << endl;
+
+        for(int j = 0; j < 5; ++j) {
+            if(j==0)
+                cout << "Time: 8:00 AM - 9:00 AM" << endl;
+            if(j==1)
+                cout << "Time: 9:00 AM - 10:00 AM" << endl;
+            if(j==2)
+                cout << "Time: 10:00 AM - 11:00 AM" << endl;
+            if(j==3)
+                cout << "Time: 11:00 AM - 12:00 PM" << endl;
+            if(j==4)
+                cout << "Time: 12:00 PM - 1:00 PM" << endl;
+
+            for(int i = 0; i < 23; ++i) {
+                if (Course_Allocation[i][j][k] != "0") { 
+                    cout << "Course: " << Course_Allocation[i][j][k] << "  ";
+                    int courseIndex = -1;
+                    for (int idx = 0; idx < subjectinput.size(); ++idx) {
+                        if (Course_Allocation[i][j][k] == subjectinput[idx]) {
+                            courseIndex = idx;
+                            break;
+                        }
+                    }
+                    if (courseIndex != -1) {
+                        cout << "Professor: " << professor_nameinput[courseIndex] << "  ";
+                        cout << "Semester: " << semesterinput[courseIndex] << "  ";
+                        cout << "Branch: " << branchinput[courseIndex] << "  ";
+                        cout << "Room: ";
+                        if (i == 0) cout << "LT1";
+                         if (i == 1) cout << "LT2";
+                        if (i == 2) cout << "LT3";
+                        if(i==3)
+                    cout<<"CEP-003";
+                    if(i==4)
+                    cout<<"CEP-102";
+                    if(i==5)
+                    cout<<"CEP-103";
+                    if(i==6)
+                    cout<<"CEP-104";
+                    if(i==7)
+                    cout<<"CEP-105";
+                    if(i==8)
+                    cout<<"CEP-106";
+                    if(i==9)
+                    cout<<"CEP-107";
+                    if(i==10)
+                    cout<<"CEP-108";
+                    if(i==11)
+                    cout<<"CEP-109";
+                    if(i==12)
+                    cout<<"CEP-110";
+                    if(i==13)
+                    cout<<"CEP-202";
+                    if(i==14)
+                    cout<<"CEP-203";
+                    if(i==15)
+                    cout<<"CEP-204";
+                    if(i==16)
+                    cout<<"CEP-205";
+                    if(i==17)
+                    cout<<"CEP-206";
+                    if(i==18)
+                    cout<<"CEP-207";
+                    if(i==19)
+                    cout<<"CEP-209";
+                    if(i==20)
+                    cout<<"CEP-210";
+                    if(i==21)
+                    cout<<"CEP-211";
+                    if(i==22)
+                    cout<<"CEP-212";
+                    }
+                    cout << endl;
+                }
+            }
+            cout << endl;
+        }
+        cout << endl << endl << endl;
+    }  
+}
