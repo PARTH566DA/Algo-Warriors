@@ -6,17 +6,12 @@
 
    timetablegenerator(Final).cpp , winter.txt, autumn.txt, winter_elective.txt, autumn_elective, these all files should be in one folder. Run the timetablegenrator(final).cpp file and output file will be saved in same folder. Here winter.txt, autumn.txt, winter_elective.txt, autumn_elective.txt are input files.
 
-## Work Distribution
-
-   Deep created all input files and takes input from that files to store in different vectors.Parth created function which allocates courses in specific slots and from that function one function is called named "Is_Prof_Avail" to check whether professor is available or not in that specific slot was made by Heet. Printing timetable in CSV file was done by Om.
-      Other additional functionality like Professor Timetable, Semester Timetable and Elective Timetable was combined input of all the group members. Algorithm of this code is also created by our group members without any reference. 
-
 ## Group Members
 
-[PARTH566DA](https://github.com/PARTH566DA)
+[PARTH](https://github.com/PARTH566DA)
 
-[HRT005](https://github.com/HRT005)
+[HEET](https://github.com/HRT005)
 
-[OmPatel1511](https://github.com/OmPatel1511)
+[OM](https://github.com/OmPatel1511)
 
-[DeepKakadiya6537](https://github.com/DeepKakadiya6537)
+[DEEP](https://github.com/DeepKakadiya6537)
